@@ -1,7 +1,10 @@
 FROM maven:3.6.0-jdk-11-slim AS build
-COPY src /home/app/src
-COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
+WORKDIR /app
+VOLUME /tmp
+
+COPY src /app/src
+COPY pom.xml /app
+RUN mvn -f /app/pom.xml clean package
 
 # Use latest jboss/base-jdk:11 image as the base
 FROM jboss/base-jdk:11
