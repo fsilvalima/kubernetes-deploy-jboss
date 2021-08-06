@@ -30,7 +30,7 @@ RUN cd $HOME \
     && chmod -R g+rw ${JBOSS_HOME}
 
 #ADD SampleWebApp.war $JBOSS_HOME/standalone/deployments/
-COPY --from=build /app/target/demo-1.0.0.war $JBOSS_HOME/standalone/deployments/demo.war
+COPY --from=build /app/target/Demo-1.0.0.war $JBOSS_HOME/standalone/deployments/Demo-1.0.0.war
 
 # Ensure signals are forwarded to the JVM process correctly for graceful shutdown
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
