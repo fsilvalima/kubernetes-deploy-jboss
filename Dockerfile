@@ -19,8 +19,9 @@ RUN cd $HOME \
     && mv $HOME/wildfly-$WILDFLY_VERSION $JBOSS_HOME \
     && rm wildfly-$WILDFLY_VERSION.tar.gz \
     && chown -R jboss:0 ${JBOSS_HOME} \
-    && chmod -R g+rw ${JBOSS_HOME} \
-    && cp SampleWebApp.war $JBOSS_HOME/standalone/deployments/
+    && chmod -R g+rw ${JBOSS_HOME}
+
+ADD SampleWebApp.war $JBOSS_HOME/standalone/deployments/
 
 # Ensure signals are forwarded to the JVM process correctly for graceful shutdown
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
