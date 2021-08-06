@@ -1,3 +1,8 @@
+FROM maven:3.6.0-jdk-11-slim AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
+
 # Use latest jboss/base-jdk:11 image as the base
 FROM jboss/base-jdk:11
 
@@ -21,7 +26,8 @@ RUN cd $HOME \
     && chown -R jboss:0 ${JBOSS_HOME} \
     && chmod -R g+rw ${JBOSS_HOME}
 
-ADD SampleWebApp.war $JBOSS_HOME/standalone/deployments/
+#ADD SampleWebApp.war $JBOSS_HOME/standalone/deployments/
+COPY --from=build /home/app/target/SampleWebApp-SNAPSHOT.war $JBOSS_HOME/standalone/deployments/SampleWebApp.war
 
 # Ensure signals are forwarded to the JVM process correctly for graceful shutdown
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
